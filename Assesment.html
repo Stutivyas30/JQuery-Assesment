@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #password {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        #strength {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .weak {
+            background-color: red;
+        }
+
+        .medium {
+            background-color: orange;
+        }
+
+        .strong {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Password Checker jQuery</h1>
+    <input type="password" id="password" placeholder="Enter your password">
+    <span id="strength">weak</span>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#password').on('input', function () {
+
+                const password = $(this).val();
+                const strength = calculateStrength(password);
+
+                const $strengthDisplay = $('#strength');
+                $strengthDisplay.removeClass('weak medium strong');
+
+                if (strength === 'weak') {
+
+                    $strengthDisplay.addClass('weak').text('weak');
+                } else if (strength === 'medium') {
+
+                    $strengthDisplay.addClass('medium').text('medium');
+                } else if (strength === 'strong') {
+
+                    $strengthDisplay.addClass('strong').text('strong');
+                }
+            });
+
+            function calculateStrength(password) {
+
+
+                if (password.length < 6) {
+                    return 'weak';
+
+                } else if (password.length >= 6 && /[A-Za-z]/.test(password) && /\d/.test(password)) {
+                    return 'medium';
+
+                } else if (password.length >= 8 && /[A-Za-z]/.test(password) && /\d/.test(password) && /[@$!%*?&#]/.test(password)) {
+                    
+                    return 'strong';
+                }
+                return 'weak';
+            }
+        });
+    </script>
+</body>
+</html>
